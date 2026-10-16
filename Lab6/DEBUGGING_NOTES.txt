@@ -1,0 +1,23 @@
+DEBUGGING NOTES - Lab 6
+
+Bug encountered
+In my Lab 5 version I checked age with .isdigit() and then converted with int().
+I found that some characters, like the superscript "²", pass .isdigit() (it
+returns True) but int("²") still crashes with a ValueError. So the validation
+said "valid" and then the program crashed on conversion.
+
+How I diagnosed it
+- Read the traceback: it pointed to the int(age_text) line and said ValueError.
+- Printed the values to compare: print("²".isdigit()) gave True, but
+  print(int("²")) crashed. That showed the check and the conversion disagreed.
+- Isolated it in a tiny test (two lines in the Python shell) to confirm.
+
+How I fixed it
+- In Lab 6, I wrapped int() in try/except ValueError, so the conversion itself
+  decides if the input is valid. Bad input prints a message and re-prompts.
+- I used else for the range check (it only runs when conversion succeeded).
+- I used finally in search to always print "(Search finished)".
+
+Lesson
+Don't guess whether input is convertible; try the conversion and catch the
+specific exception.
